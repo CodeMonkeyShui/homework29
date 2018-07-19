@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跨域-CORS</title>
+</head>
+<body>
+	<div class="container">
+		<ul class="news"></ul>
+		<button class="show">show news</button>
+	</div>
+
+	<script>
+		$('.show').addEventListener('click', function(){
+			var xhr = new XMLHttpRequest()
+			xhr.open('GET', 'http://127.0.0.1:8080/getNews', true)
+			xhr.send()
+			xhr.onload = function(){
+				appendHtml(JSON.parse(xhr.responseText))
+			}
+		})
+
+		//JSONP:JSON wiht padding  单独实现JSONP的回调函数 
+		function appendHtml(news){
+			var html = ''
+			for(var i=0; i< news.length; i++){
+				html += '<li>' + news[i] +'</li>'
+			}
+			console.log(html)
+			$('.news').innerHTML = html
+		}
+		// $ 返回querySeletor的对象
+		function $(id){
+			return document.querySelector(id)
+		}
+	</script>
+</body>
+</html>
